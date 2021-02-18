@@ -1,0 +1,68 @@
+<html>
+<head>
+<link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine/jasmine_favicon.png">
+<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script src="../js/feedbackWidget.js"></script>
+<script src="../js/game.js"></script>
+
+</head>
+<body>
+<div id="test">
+
+</div>
+<script>
+
+  beforeAll(function(done) {
+    $(() =>{
+    done();
+    });
+    });
+
+describe("A suite", () => {
+  it("contains spec with an expectation", () => {
+    expect(true).toBe(true);
+  });
+});
+
+describe("Application initialisation", () => {
+  it("Method init returns true", () => {
+  	const result = myApp.init();
+    expect(result).toBe(true);
+  });
+});
+
+describe("Hides Widget", () => {
+  it("Display equals none", () => {
+    let f = new FeedbackWidget("test");
+    f.hide();
+    
+    expect($("#test")).toBeDefined();
+    expect($("#test").attr('style')).toBe('display: none;');
+  })
+});
+
+describe("gametests", () => {
+  it("game can be found", () => {
+    expect(Game).toBeDefined();
+  })
+  it("game.init can be found", () => {
+    expect(Game.init).toBeDefined();
+  })
+  it("game.data.init can be found", () => {
+    expect(Game.Data.init).toBeDefined();
+  })
+  it("game.model.init can be found", () => {
+    expect(Game.Model.init).toBeDefined();
+  })
+})
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+    <head>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <script>
+            /*function ingredientenVerzamelen(callbackFunction) {
+                setTimeout( function(){
+                console.log('Ingredienten verzameld.');
+                callbackFunction();
+                }, 500 );
+            }
+            function dinerKoken() {
+            console.log('Lekker roeren in de soep');
+            }
+            ingredientenVerzamelen(dinerKoken);*/
+        </script>
+
+        <div class="result"></div>
+        <script>
+            /*const url = 'http://api.openweathermap.org/data/2.5/weather?q=zwolle&apikey=e75be00d6b404d31f5b679a85c9d00c1'
+            $.get( url, function( data ) {
+            $( ".result" ).html( JSON.stringify(data) );
+            alert( "Load was performed." );
+            });*/
+
+            /*const url = 'http://api.openweathermap.org/data/2.5/weather?q=zwolle&apikey=e75be00d6b404d31f5b679a85c9d00c1';
+                const promise = $.get(url);
+                console.log(promise);*/
+                
+            /*const url = 'http://api.openweathermap.org/data/2.5/weather?q=zwolle&apikey=e75be00d6b404d31f5b679a85c9d00c1';
+                $.get(url).then(function(responseData){
+                console.log(responseData);
+                });*/
+
+            const getWeatherData = function(){
+                const url = 'http://api.openweathermap.org/data/2.5/weather?q=zwolle&apikey=e75be00d6b404d31f5b679a85c9d00c1';
+                return $.get(url);
+                };
+                getWeatherData().then(d => {
+                console.log(d);
+                });
+
+            getWeatherData().then(d => {
+                return {
+                data: d,
+                meta: 'vanuit eerste schakel van de chain'
+                }
+                }).then(r => {
+                console.log(`Bericht ontvangen in tweede schakel: ${r.meta}`);
+                throw new Error('Error gegooid');
+                }).catch(e => {
+                console.log(`Error opgevangen, error bericht: ${e.message}`);
+                });
+
+        </script>
+    </body>
+</html>
