@@ -5,7 +5,7 @@ class FeedbackWidget{
          this.$element = $("#" + this._elementId);
     }
     get elementId() 
-    { //getter, set keyword voor setter methode
+    { 
          return this._elementId;
     }
     show(type, message)
@@ -21,10 +21,12 @@ class FeedbackWidget{
             this.$element.removeClass("alert alert-succes");
             this.$element.addClass("alert alert-danger");
        }   
+       
     }
     hide() {
         this.$element.css("display", "none");
     }
+    //log({type:"success", message:"test"})
     log(message) {
         let logs = JSON.parse(localStorage.getItem('feedback_widget')) ?? [];
         logs.push(message);
@@ -49,8 +51,9 @@ const Game = ((url) =>{
         apiUrl: url
     }
 
-    const privateInit = () =>{
-
+    const privateInit = (env) =>{
+        //init model
+        Game.Data.init(env);
         setInterval(() => {
             _getCurrentGamestate()
         }, 2000)
@@ -64,18 +67,17 @@ const Game = ((url) =>{
     }
 
 })('/api/url')
-    
+
 Game.Data = (() =>{
 
     let stateMap = { 'environment' : 'developement' }
 
     let configMap = {
-        mock: [
+        mock:
             {
             url: 'api/Spel/Beurt',
             data: 0
-            }
-        ],
+            },
         apiKey: 'e75be00d6b404d31f5b679a85c9d00c1'
     };
 
@@ -107,7 +109,7 @@ Game.Model = (() =>{
     let configMap = {
 
     }
-
+///api/Spel/Beurt/ make variable not static
     const _getGameState = function(token){
         Game.Data.get('/api/Spel/Beurt/' + token).then(x => {
             switch(x.data) {

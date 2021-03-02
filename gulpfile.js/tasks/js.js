@@ -11,8 +11,7 @@ const fn = function (config) {
         // presets: ['@babel/preset-env']
         // }))
         .pipe(dest('./dist/js'))
-        .pipe(dest(config + 'js'));
-        
+        .pipe(dest(config.localServerProjectPath + 'js'));
     }
 };
 
