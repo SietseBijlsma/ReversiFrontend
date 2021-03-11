@@ -9,9 +9,11 @@ const fn = function (config) {
         .pipe(concat('app.js'))
         // .pipe(babel({
         // presets: ['@babel/preset-env']
-        // }))
+        // })) 
         .pipe(dest('./dist/js'))
-        .pipe(dest(config.localServerProjectPath + 'js'));
+        .pipe(dest(config.localServerProjectPath + 'js'))
+        // .pipe(uglify({compress: true})) 
+        // .pipe(dest(config.localServerProjectPath + 'uglified'))
     }
 };
 

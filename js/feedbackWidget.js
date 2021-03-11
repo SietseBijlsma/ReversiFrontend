@@ -3,28 +3,49 @@ class FeedbackWidget{
     {
          this._elementId = elementId;
          this.$element = $("#" + this._elementId);
+         this.$element.empty();
+         this.$element.addClass("feedbackWidget")
+         this.$element.append(`
+                <div class="feedbackWidget-check">
+                    <i class="fas fa-check fa-3x"></i>
+                </div>
+                
+                <div class="feedbackWidget-times">
+                    <i class="fas fa-times"></i>
+                </div>
+                <p class="feedbackWidget-p">something went wrong</p>
+                <div class="feedbackWidget-buttons">
+                    <button class="button">Akoord</button>
+                    <button class="button">Weigeren</button>
+                </div>
+         `);
+
+         this.$element.find(".feedbackWidget-times").click(function() {
+            $("#test").removeClass("active");
+          });
     }
     get elementId() 
     { 
          return this._elementId;
     }
-    show(type, message)
+    show(type //, message
+        )
     {
-        this.$element.html(`<pre>${message}</pre>`);
-        this.$element.css("display", "block");
+        // this.$element.html(`<pre>${message}</pre>`);
+        // this.$element.css("display", "block");
         if(type == "success") 
         {
-            this.$element.removeClass("alert alert-danger");
-            this.$element.addClass("alert alert-success");
+            this.$element.removeClass("alert-danger");
+            this.$element.addClass("alert-success");
         }
        else {
-            this.$element.removeClass("alert alert-succes");
-            this.$element.addClass("alert alert-danger");
+            this.$element.removeClass("alert-succes");
+            this.$element.addClass("alert-danger");
        }   
-       
+       this.$element.addClass("active");
     }
     hide() {
-        this.$element.css("display", "none");
+        this.$element.removeClass("active");
     }
     //log({type:"success", message:"test"})
     log(message) {

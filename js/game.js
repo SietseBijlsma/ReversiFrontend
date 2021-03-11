@@ -58,10 +58,11 @@ Game.Data = (() =>{
 })()
 
 Game.Model = (() =>{
-
+    
     let configMap = {
 
     }
+
 ///api/Spel/Beurt/ make variable not static
     const _getGameState = function(token){
         Game.Data.get('/api/Spel/Beurt/' + token).then(x => {
@@ -85,3 +86,29 @@ Game.Model = (() =>{
         getGameState: _getGameState
         }
 })()
+
+Game.Board = (() =>{
+    
+    let configMap = {
+        boardSize: 8,
+    }
+
+    let statemap = {
+        moving : 1, 
+        board: []
+    }
+
+    const board = () => {
+        $boardTemplate = $(`<div class="board" style="
+        grid-template-columns: repeat(${configMap.boardSize}, 2rem); 
+        grid-template-rows: repeat(${configMap.boardSize}, 2rem);
+        ></div>`);
+
+        for (let row = 0; row < configMap.boardSize; row++) {
+            for (let col = 0; col < configMap.boardSize; col++) {
+                
+            }
+        }
+
+    }
+})
