@@ -4,21 +4,27 @@ const Game = ((url) =>{
         apiUrl: url
     }
 
-    const privateInit = (env, token) =>{
+    const privateInit = (env, token, playerToken) =>{
        
         Game.Data.init(env);
-        Game.Board.init('board', token);
+        Game.Board.init('board', token, playerToken);
         // setInterval(() => {
         //     _getCurrentGamestate()
         // }, 2000)
+        update();
+    }
+
+    const update = () => {
         Game.Board.update();
     }
+
     const _getCurrentGamestate = () => {
         Game.Model.getGameState();
     }
 
     return {
-        init: privateInit
+        init: privateInit,
+        update: update
     }
 
 })('/api/url')
@@ -65,6 +71,8 @@ Game.Data = (() =>{
             url: stateMap.baseUrl + url,
             type: 'PUT',
             data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             crossDomain: true
         });
     }
@@ -124,6 +132,7 @@ Game.Board = (() =>{
         token: "",
         moving : 1, 
         board: [],
+        currentPlayerToken: "",
     }
 
     const board = () => {
@@ -142,26 +151,28 @@ Game.Board = (() =>{
                 $boardTemplate.append($cell);
             }
         }
-        
+
         stateMap.$board.append($boardTemplate);
     }
 
-    const _init = (parentBoard, token) => {
+    const _init = (parentBoard, token, playerToken) => {
         stateMap.token = token;
         stateMap.$board = $(`#${parentBoard}`);
+        stateMap.currentPlayerToken = playerToken;
         board();
     }
 
     const _placeFiche = async (row, col) => {
-       let result = await Game.Data.put("game/move", {
-            row: row,
-            col: col,
-            player: stateMap.moving
+       let result = await Game.Data.put(`game/${stateMap.token}/move`, {
+            row: parseInt(row),
+            col: parseInt(col),
+            player: stateMap.currentPlayerToken
        }).then(res => res).catch(e => false);
 
        if(result) {
            _update();
            _updateBoard();
+           stateMap.$board.trigger('updateBoard');
        }
     }
 
@@ -177,10 +188,10 @@ Game.Board = (() =>{
                 }
 
                 if(color == "white") {
-                    _getCoords(row, col).find('.fiche').removeClass("white");
+                    _getCoords(row, col).find('.fiche').removeClass("black");
                 }
                 else if (color == "black") {
-                    _getCoords(row, col).find('.fiche').removeClass("black");
+                    _getCoords(row, col).find('.fiche').removeClass("white");
                 }
                 _getCoords(row, col).find('.fiche').addClass(color);
             }
@@ -192,12 +203,15 @@ Game.Board = (() =>{
             stateMap.board = JSON.parse(res.board);
             stateMap.moving = res.moving;
             _updateBoard();
+        }).catch(_ => {
+            
+            _update();
         })
     }
 
     const _getCoords = (row, col) => {
-        if(row > 0 && row < configMap.boardSize && col > 0 && col < configMap.boardSize) {
-            return stateMap.$board.find(`[data-row=${row}][data-col=${col}]`);
+        if(row >= 0 && row < configMap.boardSize && col >= 0 && col < configMap.boardSize) {
+            return stateMap.$board.find(`.cell[data-row="${row}"][data-col="${col}"]`);
         }
         return false;
     }
