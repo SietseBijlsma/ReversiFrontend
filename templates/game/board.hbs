@@ -1,0 +1,12 @@
+<div class="board" style="
+        grid-template-columns: repeat({{boardSize}}, 4rem); 
+        grid-template-rows: repeat({{boardSize}}, 4rem);"
+>
+    {{#each board}}
+        {{#each this}}
+            <div class="cell" data-row="{{@../index}}" data-col="{{@index}}" onclick="Game.Board.placeFiche({{@../index}}, {{@index}})">
+                <div class="fiche color-{{this}}"></div>
+            </div>
+        {{/each}}
+    {{/each}}
+</div>

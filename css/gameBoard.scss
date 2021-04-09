@@ -24,13 +24,13 @@
         cursor: pointer;
         border-radius: 50%;
         
-        &.black {
+        &.color-2 {
             background-color: black;
             animation-name: fadeIn;
             animation-duration: .5s;
         }
     
-        &.white {
+        &.color-1 {
             background-color:  white;
             animation-name: fadeIn;
             animation-duration: .5s;
@@ -40,10 +40,6 @@
             from { opacity: 0}
             to { opacity: 1}
           }
-          
-
     }
-
-    
-
 }
+

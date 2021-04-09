@@ -3,7 +3,9 @@ module.exports = {
     files: {
         js: 'js/**/*.js',
         sass: 'css/**/*.scss', 
+        vendor: 'vendor/**/*.js',
+        handlebars: 'templates/**/[^_]*.hbs',
+        partials: 'templates/**/_*.hbs'
     },
-    voornaam: 'Sietse',
     filesJsOrder: ['js/**/*.js'],
 };
